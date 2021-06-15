@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css' rel='stylesheet' />
+  <script
+  	src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+  <style>
+
+	
+
+<style type="text/css">
+
+	* {
+	  box-sizing: border-box;
+	}
+	.marker1 {
+	  background-image: url('mapbox-icon.png');
+	  background-size: cover;
+	  width: 50px;
+	  height: 50px;
+	  border-radius: 50%;
+	  cursor: pointer;
+	}
+	.marker2 {
+	  background-image: url('mapbox-icon2.png');
+	  background-size: cover;
+	  width: 50px;
+	  height: 50px;
+	  border-radius: 50%;
+	  cursor: pointer;
+	}
+	#map {
+     
+	text-align: left;
+      width: 620px;
+      height: 270px;
+      float: left;
+
+      margin: 15px;
+      margin-top: 0px;
+    }
+    .eleInfo {
+	  position: absolute;
+	  font-family: Courier New, monospace;
+	  margin-top: 15px;
+	  margin-left: 30px;
+	  text-align: left;
+	  width: 220px;
+	  border: 2px solid black;
+	  font-size: 12px;
+	  font-weight: bold;
+	  color: #222;
+	  background-color: #fff;
+	  opacity: 0.9;
+	}
+
+	.container1 { /*Commands*/
+	  /* for display purposes */
+	  float: left;
+	  padding: 10px;
+	  width: 8%;
+	  height: 630px; /* Should be removed. Only for demonstration */
+	  box-shadow: 10px 10px 10px black;
+	  margin-left: -5px;
+	}
+	.container2 {/*Container*/
+	  /* for display purposes */
+	  float: left;
+	  padding: 10px;
+	  width: 44%;
+	  height: 630px; /* Should be removed. Only for demonstration */
+	  box-shadow: 10px 10px 10px black;
+	  margin-left: 15px;
+	}
+	
+	.container3 { /*SPs*/
+	  /* for display purposes */
+	  float: left;
+	  padding: 10px;
+	  width: 41%;
+	  height: 631px; /* Should be removed. Only for demonstration */
+	  box-shadow: 10px 10px 10px black;
+	  margin-left: 865px;
+	  margin-top: -652px;
+	  text-align: center;
+	}
+	
+	
+	.mainContainer {
+	  /* for display purposes */
+	  width:100%;
+	  text-align: center;
+	  margin-top: 10px;
+	  
+	  /* make sure we contain the floats */
+	  
+	}
+	.subContainerContainerCharts {
+	  /* Commands */
+		  width:100%;
+		  height: 140px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  margin-top: -15px;
+		  box-shadow: 10px 10px 10px black;
+		  background-color: #242A39;
+	}
+	.subContainerContainerData {
+	  /* for display purposes */
+		  width:100%;
+		  height: 160px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: left;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top: 12px;
+		  background-color: #242A39;
+	}
+	.subContainerContainerMap {
+	  /* for display purposes */
+		  width:100%;
+		  height: 287px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  margin-top: 12px;
+		  box-shadow: 10px 10px 10px black;
+		  background-color: #242A39;
+	}
+	.subContainerSP1 {
+	  /* for display purposes */
+		  width:100%;
+		  height: 140px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+
+		  margin-top: -15px;
+		  box-shadow: 10px 10px 10px black;
+		  background-color: #242A39;
+	}
+	.subContainerSP1Data{
+		  width:100%;
+		  height: 45px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: left;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top: 15px;
+		  background-color: #242A39;
+	}
+	.subContainerSP2 {
+	  /* for display purposes */
+		  width:100%;
+		  height: 140px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+
+		  margin-top: -15px;
+		  box-shadow: 10px 10px 10px black;
+		  background-color: #242A39;
+	}
+	.subContainerSP2Data{
+		width:100%;
+		  height: 45px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: left;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top: 15px;
+		  background-color: #242A39;
+
+	}
+	.subContainerTracking{
+		  width:100%;
+		  height:150px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: center;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top: 15px;
+		  background-color: #242A39;
+	}
+	.subContainerTrackingData{
+		  width:45%;
+		  height:115px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: left;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top: -15px;
+		  background-color: #242A39;
+		  float:left;
+		  font-size: 13px;
+		  margin-left: 15px;
+	}
+	.subContainerTrackingGraph{
+		  width:45%;
+		  height:115px; /* Should be removed. Only for demonstration */
+		  margin: 0 auto;
+		  text-align: left;
+		  box-shadow: 10px 10px 10px black;
+		  margin-top:-15px;
+		  background-color: #242A39;
+		   float:left;
+		   margin-left: 15px;
+	}
+	.subContainerButtonStart{
+		border: solid 1px; border-color: black;
+	}
+	.subContainerButtonEnd{
+		border: solid 1px; border-color: black;
+	}
+	.subContainerButtonImport{
+		border: solid 1px; border-color: black;
+	}
+
+
+	canvas {
+	  /* for display purposes */
+	  border: 2px solid;
+	  border-color: black;
+	  border-radius: 10px;
+	  background-color: #FFFAFA;
+	  display: block;
+	  float: left; 
+	  margin-left: 12px;
+	  margin-top: 5px;
+	  box-shadow: 10px 10px 10px black;
+
+	}
+	body{
+		background-color:  #2F4F4F;
+		background-image: linear-gradient(to bottom right, #2F4F4F, #141f1f);
+		min-height: 98vh;
+	    display: flex;
+	    flex-direction: column;
+	    
+	}
+	header{
+		margin: 0 -9rem;
+		margin-top: -5px;
+		width:110%;
+		text-align: center;
+		background-color: #00008B;
+		background-image: linear-gradient(to bottom right,#00008B , #141f1f);
+		height: 60px;
+
+	}
+	footer{
+	   height: 50px;
+	   margin-bottom: -5px;
+	   margin-top: auto ;
+	   background-color: #00008B;
+	   background-image: linear-gradient(to bottom right, #00008B,#141f1f);
+	   text-align: center;
+	   margin-left:  -9rem;
+		width:110%;
+	}
+	p,h1,h2,h3,h4,h5,h6{
+		margin-top: -5px;
+		font-family: Courier New, monospace;
+		color: #FFFAFA;
+
+
+	}
+	
+
+</style>
+<body>
+
+<header >
+
+	<div style=" margin-left:340px;  width:300px; height: 60px; position: absolute;"> 
+		<img src="cansat.png" alt="cansat" width="48px" height="48px" style="margin-top:2px; ">
+	</div>
+	<div style=" "> 
+		<h2 style= "margin-top:17px; "> CANSAT COMPETITION 2021 - #2092 - TEAM THOR  </h2>
+	</div>
+	<div style= " margin-left:150px;   height: 60px; position: absolute; top:2px;left:1150px"> 
+		<img src="upiitaLogoTeamThor.jpg" alt="cansat" width="61px" height="38px" style="margin-top:8px;box-shadow: 10px 10px 10px black; ">
+		<img src="ipn.jpg" alt="cansat" width="60px" height="37px" style="margin-top:8px; box-shadow: 10px 10px 10px black; ">
+		
+		<img src="mxFlag.png" alt="cansat" width="60px" height="37px" style="margin-top:8px; box-shadow: 10px 10px 10px black;">
+
+	</div>
+</header>
+
+<div class="mainContainer" > 
+	<div class="container1" style="border: solid 1px; border-color: black;"> 
+		<h3>Control Commands</h3>
+		<div class="subContainerButtonImport"> 
+			<button onclick="importCommand()">Import .csv</button >
+			<!--input type="file"
+			id="avatar" name="avatar"
+			accept="csv"-->
+		</div>
+
+		<div class="subContainerButtonStart" > 
+			<button onclick="startCommand()">Start Mission</button>
+		</div>
+		<div class="subContainerButtonEnable" > 
+			<button onclick="enableCommand()">Enable Simulation</button>
+		</div>
+		<div class="subContainerButtonActivate" > 
+			<button onclick="activateCommand()">Activate Simulation</button>
+		</div>
+		<div class="subContainerButtonEnd"> 
+			<button onclick="endCommand()">End Mission</button>
+		</div>
+		
+	</div>
+	<div class="container2"  style="border: solid 1px; border-color: black;"> 
+		<h3>Container Telemetry</h3>
+		<div class="subContainerContainerCharts" style="border: 1px solid; color:black" > 
+			<canvas id = "containerAltitudeChart" width="205" height="125" > </canvas>		
+			<canvas id = "containerTemperatureChart" width="205" height="125" > </canvas>	
+			<canvas id = "containerVoltageChart" width="205" height="125" > </canvas>
+		</div>
+		<div class="subContainerContainerData" style="border: 1px solid; color:black"> 
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID: <div id="TEAMID" style="color:#7FFFD4; float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME [s]: <div id="MISSIONTIME" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT: <div id="PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE: <div id="PACKETTYPE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">MODE: <div id="MODE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 RELEASED: <div id="SP1RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 RELEASED: <div id="SP2RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS TIME [s]: <div id="GPSTIME" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS SATS: <div id="GPSSATS" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 PACKET COUNT: <div id="SP1PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 PACKET COUNT: <div id="SP2PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SOFTWARE STATE: <div id="SOFTWARESTATE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">CMD ECHO: <div id="CMDECHO" style="color:#7FFFD4;float:right" > </div> </h5>
+
+
+
+
+
+		</div>
+
+		<div class="subContainerContainerMap"  style="border: 1px solid; "    >
+
+		<!--	<h6 style=" text-align: left;  height:14px;  width:47%;color:white; margin-top: 0px; margin-left: 10px">GPS LATITUDE: <div id="GPSLATITUDE" style="color:#7FFFD4; float:right"  > </div> </h6>
+
+			<h6 style="text-align: left;  height:14px; width:47%;color:white; margin-top: -22px; margin-left: 10px">GPS LONGITUDE: <div id="GPSLONGITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
+
+			<h6 style="text-align: left;  height:14px; width:47%; color:white; margin-top: -22px;  margin-left: 10px">GPS ALTITUDE: <div id="GPSALTITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
+-->
+			
+
+			<div id='map'  ></div>
+			<div class="eleInfo">
+			  <div style="margin-left: 5px;">GPS LONGITUDE [°]: <span id='lng'></span></div>
+			  <div style="margin-left: 5px">GPS LATITUDE [°]: <span id='lat'></span></div>
+			  <div style="margin-left: 5px" >GPS ALTITUDE [°]: <span id='ele'></span></div>
+			</div>
+
+			<script>
+			   
+				
+							  
+			</script>
+			 
+
+			</div>
+	</div>
+
+	<div class="container3"   style="border: solid 1px; border-color: black;"> 
+		<h3 >Science Payload 1 Telemetry</h3>
+		<div class="subContainerSP1" style="border: 1px solid; color:black" > 
+			
+			<canvas id = "sp1PAltitudeChart" width="195" height="120" style=" margin-left: 7px;" > </canvas>
+			<canvas id = "sp1TemperatureChart" width="195" height="120" > </canvas>
+			<canvas id = "sp1RotationChart" width="195" height="120" > </canvas>
+			
+		</div>
+		<div class="subContainerSP1Data" style="border: 1px solid; color:black"> 
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp1: <div id="TEAMIDsp1" style="color:#7FFFD4; float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME sp1 [s]: <div id="MISSIONTIMEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp1: <div id="PACKETCOUNTsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp1: <div id="PACKETTYPEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			
+	
+		</div>
+		<br style = "float:left">
+		<h3 >Science Payload 2 Telemetry</h3>
+		<div class="subContainerSP2"  style="border: 1px solid; color:black"  > 
+			
+			<canvas id = "sp2PAltitudeChart" width="195" height="120" style=" margin-left: 7px;"> </canvas>
+			<canvas id = "sp2TemperatureChart" width="195" height="120"  > </canvas>
+			<canvas id = "sp2RotationChart" width="195" height="120" > </canvas>
+		</div>
+		<div class="subContainerSP2Data" style="border: 1px solid; color:black"> 
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp2: <div id="TEAMIDsp2" style="color:#7FFFD4; float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME sp2 [s]: <div id="MISSIONTIMEsp2" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp2: <div id="PACKETCOUNTsp2" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp2: <div id="PACKETTYPEsp2" style="color:#7FFFD4;float:right"> </div> </h5>
+
+			
+	
+		</div>
+		<div class="subContainerTracking" style="border: 1px solid; color:black"> 
+			<h3 >Tracking Data</h3>
+			<div class="subContainerTrackingData" style="border: 1px solid; color:black"> 
+				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px;  margin-left: 10px">Distancia [m]: <div id="distancia3d" style="color:#7FFFD4; float:right" > </div> </h5>
+
+				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px; margin-left: 10px">Elevación [°]: <div id="anguloElevaGrados" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px; margin-left: 10px">Azimuth [°]: <div id="anguloAzimutGradosCalib" style="color:#7FFFD4;float:right" > </div> </h5>
+
+			</div>
+			 <div class="subContainerTrackingGraph" style="border: 1px solid; color:black"> 
+			</div>
+			
+	
+		</div>
+	</div>
+</div>
+
+
+
+<footer >
+	
+	<h5 style= "margin-top:10px"> CANSAT COMPETITION 2021 - #2092 - TEAM THOR </h5>
+	<h6 style= "margin-top:-15px"> MÉXICO- IPN - UPIITA </h6>
+</footer>
+
+</body>
+<script src="index.js"></script>
+
+	
+
+	
+	
+</html> 
