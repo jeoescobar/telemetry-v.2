@@ -69,6 +69,10 @@
 			console.log("activate was pressed...");
 			socket.emit("activateMissionSocket", "activate");
 	} 
+	function timeCommand(){
+		console.log("Set Time was pressed...");
+		socket.emit("timeMissionSocket", "setTime");
+	}
 
 
 	socket.on("containerTelemetry", function(data){

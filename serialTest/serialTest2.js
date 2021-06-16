@@ -147,6 +147,23 @@ io.on('connection', function(socket){
 				activateSim =true;
         	
         });
+		
+		socket.on("timeMissionSocket", function(data){
+        	
+    		//sp.write(stringAltitud);
+			
+			console.log("Set Time was pressed...");
+			var time = new Date();
+			//console.log(time.getUTCHours());
+			//console.log(time.getUTCMinutes());
+			//console.log(time.getUTCSeconds());
+
+			time = time.getUTCHours() + ":" + time.getUTCMinutes() + ":" + time.getUTCSeconds();
+			console.log(time);
+			//sp.write("CMD,2092,ST,time"); //CMD,2092,ST,TIME
+			
+    	
+        });
 
 
 
@@ -157,6 +174,20 @@ io.on('connection', function(socket){
 			
 			sleep(900);
 			//console.log(results[k].Column1);
+
+			var columna1altitud0 = results[0].Column1;
+			var columna2altitud0 = results[0].Column2;
+			var columna3altitud0 = results[0].Column3;
+			var columna4altitud0 = results[0].Column4;
+			var stringAltitud0 = columna1altitud0;
+			stringAltitud0 += ",";
+			stringAltitud0 += "2092";
+			stringAltitud0 += ",";
+			stringAltitud0 += columna3altitud0;
+			stringAltitud0 += ",";
+			stringAltitud0 += columna4altitud0;
+
+
 
 			var columna1altitud = results[k].Column1;
 			var columna2altitud = results[k].Column2;
@@ -172,10 +203,16 @@ io.on('connection', function(socket){
 			console.log(stringAltitud);
 
 
-			if(enableSim && activateSim){
+			if(enableSim ){//sólo envía el primer dato del simulador
+				//sp.write(stringAltitud0);
+				console.log("Enable was pressed...sending only first simulated pressure packet");
+
+			}
+			if(activateSim){
+				enableSim =false;
 				//sp.write(stringAltitud);
 				//sp.write("enable");			
-				//console.log("Enable was pressed...");
+				console.log("Enable and activate were pressed...sending all simulated pressure packets");
 				//enableSim = false;
 			}
 			

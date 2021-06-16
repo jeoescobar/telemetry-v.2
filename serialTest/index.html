@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+  
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
- <meta name='viewport' content='width=device-width, initial-scale=1' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css' rel='stylesheet' />
-  <script
-  	src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
-  <style>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	 <meta name='viewport' content='width=device-width, initial-scale=1' />
+	  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js'></script>
+	  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css' rel='stylesheet' />
+	  <script
+		  src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
 
+		  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+		  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+
+
+</head>
 	
 
 <style type="text/css">
@@ -67,8 +83,12 @@
 	  padding: 10px;
 	  width: 8%;
 	  height: 630px; /* Should be removed. Only for demonstration */
-	  box-shadow: 10px 10px 10px black;
 	  margin-left: -5px;
+
+	  box-shadow: 10px 10px 10px black;
+	}
+	.contp1{
+		box-shadow: 10px 10px 10px black;
 	}
 	.container2 {/*Container*/
 	  /* for display purposes */
@@ -120,6 +140,12 @@
 		  box-shadow: 10px 10px 10px black;
 		  margin-top: 12px;
 		  background-color: #242A39;
+	}
+
+	.subsub2{
+		background-color: #242A39;
+		box-shadow: 10px 10px 10px black;
+		text-align: left;
 	}
 	.subContainerContainerMap {
 	  /* for display purposes */
@@ -260,6 +286,10 @@
 
 
 	}
+
+	.buttonssize{
+		padding: 15% 20%;
+	}
 	
 
 </style>
@@ -282,154 +312,197 @@
 	</div>
 </header>
 
-<div class="mainContainer" > 
-	<div class="container1" style="border: solid 1px; border-color: black;"> 
+<div class=" container-fluid" >
+	<div class="row"> 
+	<div class="col-1 pt-2">
+
+	<div class="contp1 p-1 " style="border: solid 1px; border-color: black;"> 
 		<h3>Control Commands</h3>
 		<div class="subContainerButtonImport"> 
-			<button onclick="importCommand()">Import .csv</button >
+			<button class="btn btn-secondary btn-lg buttonssize"  onclick="importCommand()">Import .csv</button >
 			<!--input type="file"
 			id="avatar" name="avatar"
 			accept="csv"-->
 		</div>
+		<div class="subContainerButtonStart" > 
+			<button class="btn btn-info btn-lg buttonssize" onclick="timeCommand()">Set Time</button>
+		</div>
 
 		<div class="subContainerButtonStart" > 
-			<button onclick="startCommand()">Start Mission</button>
+			<button class="btn btn-primary btn-lg buttonssize" onclick="startCommand()">Start Mission</button>
 		</div>
 		<div class="subContainerButtonEnable" > 
-			<button onclick="enableCommand()">Enable Simulation</button>
+			<button class="btn btn-success  buttonssize" onclick="enableCommand()">Enable Simulation</button>
 		</div>
 		<div class="subContainerButtonActivate" > 
-			<button onclick="activateCommand()">Activate Simulation</button>
+			<button class="btn btn-warning  buttonssize" onclick="activateCommand()">Activate Simulation</button>
 		</div>
 		<div class="subContainerButtonEnd"> 
-			<button onclick="endCommand()">End Mission</button>
+			<button class="btn btn-danger btn-lg buttonssize" onclick="endCommand()">End Mission</button>
 		</div>
 		
 	</div>
-	<div class="container2"  style="border: solid 1px; border-color: black;"> 
-		<h3>Container Telemetry</h3>
-		<div class="subContainerContainerCharts" style="border: 1px solid; color:black" > 
-			<canvas id = "containerAltitudeChart" width="205" height="125" > </canvas>		
-			<canvas id = "containerTemperatureChart" width="205" height="125" > </canvas>	
-			<canvas id = "containerVoltageChart" width="205" height="125" > </canvas>
-		</div>
-		<div class="subContainerContainerData" style="border: 1px solid; color:black"> 
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID: <div id="TEAMID" style="color:#7FFFD4; float:right" > </div> </h5>
+	</div> <!--End Col 1-->
 
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME [s]: <div id="MISSIONTIME" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT: <div id="PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE: <div id="PACKETTYPE" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">MODE: <div id="MODE" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 RELEASED: <div id="SP1RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 RELEASED: <div id="SP2RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS TIME [s]: <div id="GPSTIME" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS SATS: <div id="GPSSATS" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 PACKET COUNT: <div id="SP1PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 PACKET COUNT: <div id="SP2PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SOFTWARE STATE: <div id="SOFTWARESTATE" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">CMD ECHO: <div id="CMDECHO" style="color:#7FFFD4;float:right" > </div> </h5>
-
-
-
-
-
-		</div>
-
-		<div class="subContainerContainerMap"  style="border: 1px solid; "    >
-
-		<!--	<h6 style=" text-align: left;  height:14px;  width:47%;color:white; margin-top: 0px; margin-left: 10px">GPS LATITUDE: <div id="GPSLATITUDE" style="color:#7FFFD4; float:right"  > </div> </h6>
-
-			<h6 style="text-align: left;  height:14px; width:47%;color:white; margin-top: -22px; margin-left: 10px">GPS LONGITUDE: <div id="GPSLONGITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
-
-			<h6 style="text-align: left;  height:14px; width:47%; color:white; margin-top: -22px;  margin-left: 10px">GPS ALTITUDE: <div id="GPSALTITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
--->
-			
-
-			<div id='map'  ></div>
-			<div class="eleInfo">
-			  <div style="margin-left: 5px;">GPS LONGITUDE [°]: <span id='lng'></span></div>
-			  <div style="margin-left: 5px">GPS LATITUDE [°]: <span id='lat'></span></div>
-			  <div style="margin-left: 5px" >GPS ALTITUDE [°]: <span id='ele'></span></div>
+	<div class="col-6 pt-2">
+	<div class="contp1 container"  style="border: solid 1px; border-color: black;"> 
+		<h3 class="text-center">Container Telemetry</h3>
+		<div class="row">
+			<div class="subContainerContainerCharts p-1" style="border: 1px solid; color:black" > 
+				<canvas class ="p-1" id = "containerAltitudeChart" width="205" height="125" > </canvas>		
+				<canvas class ="p-1" id = "containerTemperatureChart" width="205" height="125" > </canvas>	
+				<canvas class ="p-1" id = "containerVoltageChart" width="205" height="125" > </canvas>
 			</div>
+		</div>
 
-			<script>
-			   
+		<div class="row">
+			<div class="subsub2 p-1  m-1" style="border: 1px solid; color:black"> 
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px;" >TEAM ID: <div id="TEAMID" style="color:#7FFFD4; float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME [s]: <div id="MISSIONTIME" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<!--h5 class="p-1 m-1 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px; display: inline;">PACKET COUNT: <div class="p-1 m-1" id="PACKETCOUNT" style="color:#7FFFD4; float:right" > </div> </h5-->
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT: <div  id="PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<!--h5 class="p-1 m-1 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px>PACKET TYPE: <div class="p-1 m-1" id="PACKETTYPE" style="color:#7FFFD4;float:right" > </div> </h5 -->
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE: <div  id="PACKETTYPE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">MODE: <div  id="MODE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 RELEASED: <div  id="SP1RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 RELEASED: <div  id="SP2RELEASED" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS TIME [s]: <div  id="GPSTIME" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">GPS SATS: <div  id="GPSSATS" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP1 PACKET COUNT: <div  id="SP1PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SP2 PACKET COUNT: <div  id="SP2PACKETCOUNT" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1  m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">SOFTWARE STATE: <div  id="SOFTWARESTATE" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class="p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">CMD ECHO: <div  id="CMDECHO" style="color:#7FFFD4;float:right" > </div> </h5>
+
+
+
+
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="subContainerContainerMap"  style="border: 1px solid; "    >
+
+			<!--	<h6 style=" text-align: left;  height:14px;  width:47%;color:white; margin-top: 0px; margin-left: 10px">GPS LATITUDE: <div id="GPSLATITUDE" style="color:#7FFFD4; float:right"  > </div> </h6>
+
+				<h6 style="text-align: left;  height:14px; width:47%;color:white; margin-top: -22px; margin-left: 10px">GPS LONGITUDE: <div id="GPSLONGITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
+
+				<h6 style="text-align: left;  height:14px; width:47%; color:white; margin-top: -22px;  margin-left: 10px">GPS ALTITUDE: <div id="GPSALTITUDE" style="color:#7FFFD4;float:right" > </div> </h6>
+				-->
 				
-							  
-			</script>
-			 
 
-			</div>
-	</div>
+				<div id='map'  ></div>
+				<div class="p-1 m-1">
+				<div class="p-1 m-1" style="margin-left: 5px; color:white;">GPS LONGITUDE [°]: <span id='lng'></span></div>
+				<div class="p-1 m-1" style="margin-left: 5px; color:white;">GPS LATITUDE [°]: <span id='lat'></span></div>
+				<div class="p-1 m-1" style="margin-left: 5px; color:white;" >GPS ALTITUDE [°]: <span id='ele'></span></div>
+				</div>
 
-	<div class="container3"   style="border: solid 1px; border-color: black;"> 
-		<h3 >Science Payload 1 Telemetry</h3>
-		<div class="subContainerSP1" style="border: 1px solid; color:black" > 
+				
+				
+
+				</div>
 			
-			<canvas id = "sp1PAltitudeChart" width="195" height="120" style=" margin-left: 7px;" > </canvas>
-			<canvas id = "sp1TemperatureChart" width="195" height="120" > </canvas>
-			<canvas id = "sp1RotationChart" width="195" height="120" > </canvas>
-			
-		</div>
-		<div class="subContainerSP1Data" style="border: 1px solid; color:black"> 
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp1: <div id="TEAMIDsp1" style="color:#7FFFD4; float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME sp1 [s]: <div id="MISSIONTIMEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp1: <div id="PACKETCOUNTsp1" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp1: <div id="PACKETTYPEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			
-	
-		</div>
-		<br style = "float:left">
-		<h3 >Science Payload 2 Telemetry</h3>
-		<div class="subContainerSP2"  style="border: 1px solid; color:black"  > 
-			
-			<canvas id = "sp2PAltitudeChart" width="195" height="120" style=" margin-left: 7px;"> </canvas>
-			<canvas id = "sp2TemperatureChart" width="195" height="120"  > </canvas>
-			<canvas id = "sp2RotationChart" width="195" height="120" > </canvas>
-		</div>
-		<div class="subContainerSP2Data" style="border: 1px solid; color:black"> 
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp2: <div id="TEAMIDsp2" style="color:#7FFFD4; float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME sp2 [s]: <div id="MISSIONTIMEsp2" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp2: <div id="PACKETCOUNTsp2" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			 <h5 style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp2: <div id="PACKETTYPEsp2" style="color:#7FFFD4;float:right"> </div> </h5>
-
-			
-	
-		</div>
-		<div class="subContainerTracking" style="border: 1px solid; color:black"> 
-			<h3 >Tracking Data</h3>
-			<div class="subContainerTrackingData" style="border: 1px solid; color:black"> 
-				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px;  margin-left: 10px">Distancia [m]: <div id="distancia3d" style="color:#7FFFD4; float:right" > </div> </h5>
-
-				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px; margin-left: 10px">Elevación [°]: <div id="anguloElevaGrados" style="color:#7FFFD4;float:right" > </div> </h5>
-
-				 <h5 style="height:20px; width:47%; color:white; margin-top: 0px; margin-left: 10px">Azimuth [°]: <div id="anguloAzimutGradosCalib" style="color:#7FFFD4;float:right" > </div> </h5>
-
-			</div>
-			 <div class="subContainerTrackingGraph" style="border: 1px solid; color:black"> 
-			</div>
-			
-	
 		</div>
 	</div>
+	</div> <!--End Col 2-->
+
+
+	<div class="col-5 pt-2">
+	
+		<div class="container-fluid"   style="border: solid 1px; border-color: black;"> 
+			<h3 class="text-center"> Science Payload 1 Telemetry</h3>
+
+			<div class="subsub2 row " style="border: 1px solid; color:black" > 
+				<div class="col-4">
+					<canvas class="p-1 ms-1 " id = "sp1PAltitudeChart" width="200%" height="125%" style=" margin-left: 7px;" > </canvas>
+				</div>
+				<div class="col-4">
+					<canvas class="p-1 ms-1 " id = "sp1TemperatureChart" width="200%" height="125%" > </canvas>
+				</div>
+				<div class="col-4">
+					<canvas class="p-1 ms-1 " id = "sp1RotationChart" width="200%" height="125%" > </canvas>
+				</div>
+			</div>
+
+
+			<div class="subsub2 row mt-5 p-1" style="border: 1px solid; color:black"> 
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp1: <div id="TEAMIDsp1" style="color:#7FFFD4; float:right" > </div> </h5>
+
+				<h5 class= " p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px ">MISSION TIME sp1 [s]: <div id="MISSIONTIMEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp1: <div id="PACKETCOUNTsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp1: <div id="PACKETTYPEsp1" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				
+		
+			</div>
+
+			<br style = "float:left">
+			<h3 class="text-center">Science Payload 2 Telemetry</h3>
+			<div class="subsub2 row mt-4"  style="border: 1px solid; color:black"  > 
+				
+				<canvas id = "sp2PAltitudeChart" width="195" height="120" style=" margin-left: 7px;"> </canvas>
+				<canvas id = "sp2TemperatureChart" width="195" height="120"  > </canvas>
+				<canvas id = "sp2RotationChart" width="195" height="120" > </canvas>
+			</div>
+
+			<div class="subsub2 row mt-4 p-1" style="border: 1px solid; color:black"> 
+				<h5 style="height:20px; width:47%;float:left; color:white; margin-top: 0px;  margin-left: 10px">TEAM ID sp2: <div id="TEAMIDsp2" style="color:#7FFFD4; float:right" > </div> </h5>
+
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: 0px; margin-left: 10px">MISSION TIME sp2 [s]: <div id="MISSIONTIMEsp2" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET COUNT sp2: <div id="PACKETCOUNTsp2" style="color:#7FFFD4;float:right" > </div> </h5>
+
+				<h5 class= "p-1 m-1" style="height:20px; width:47%;float:left; color:white; margin-top: -20px; margin-left: 10px">PACKET TYPE sp2: <div id="PACKETTYPEsp2" style="color:#7FFFD4;float:right"> </div> </h5>
+
+				
+		
+			</div>
+
+
+
+			<div class="subsub2 row mt-4" style="border: 1px solid; color:black"> 
+				<h3 class="text-center ">Tracking Data</h3>
+				
+				<div class="row m-1 p-1 mb-4 pe-3">
+
+					<div class="subsub2 col-6" style="border: 1px solid; color:black"> 
+						<h5 class= "p-1 m-1" style=" color:white; margin-top: 0px;  ">Distancia [m]: <div id="distancia3d" style="color:#7FFFD4; float:right" > </div> </h5>
+
+						<h5 class= "p-1 m-1" style=" color:white; margin-top: 0px; ">Elevación [°]: <div id="anguloElevaGrados" style="color:#7FFFD4;float:right" > </div> </h5>
+
+						<h5 class= "p-1 m-1" style=" color:white; margin-top: 0px; ">Azimuth [°]: <div id="anguloAzimutGradosCalib" style="color:#7FFFD4;float:right" > </div> </h5>
+
+					</div>
+					<div class="subsub2 col-6" style="border: 1px solid; color:black"> 
+					</div>
+
+				</div>
+
+		
+			</div>
+
+		</div>
+	</div> <!--End Col 3-->
+
+
+</div>
 </div>
 
 
