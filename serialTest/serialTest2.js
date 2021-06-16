@@ -120,7 +120,7 @@ io.on('connection', function(socket){
 				
 		        
 		        console.log(results);
-		       
+				
 		        console.log("csv file imported succesfully...");
 		         
 			});
@@ -147,7 +147,7 @@ io.on('connection', function(socket){
 				activateSim =true;
         	
         });
-		
+
 		socket.on("timeMissionSocket", function(data){
         	
     		//sp.write(stringAltitud);

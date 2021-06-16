@@ -59,6 +59,7 @@
 			//get csv path
 			
 			socket.emit("importMissionSocket", "import");
+			//alert("csv file imported succesfully...");
 			
 	} 
 	function enableCommand(){
